@@ -118,30 +118,47 @@ public:
         cin >> this->discount;
         startTime.input();
         endTime.input();
-
+        Price();
     }
     void Price()
     {
         int callTime;
-        int priceWithoutDisc;
+        double priceWithoutDisc;
         if(startTime.hoursGetter() > endTime.hoursGetter())
         {
-            callTime = ((((endTime.hoursGetter()+24)*60)+endTime.minutesGetter())-(startTime.hoursGetter()*24)+startTime.minutesGetter());
+            callTime = ((((endTime.hoursGetter()+24)*60)+endTime.minutesGetter())-(startTime.hoursGetter()*60)+startTime.minutesGetter());
         }
         else
         {
-            callTime = (((endTime.hoursGetter()*60)+endTime.minutesGetter())-(startTime.hoursGetter()*24)+startTime.minutesGetter());
+            callTime = (endTime.hoursGetter()*60+endTime.minutesGetter())-(startTime.hoursGetter()*60+startTime.minutesGetter());
         }
+        cout << callTime << "\n";
         priceWithoutDisc = callTime * this->minutePrice;
-        this->sumPrice = round((priceWithoutDisc - (priceWithoutDisc/100)*this->discount)*100)/100;
+        this->sumPrice = priceWithoutDisc - ((priceWithoutDisc/100)*this->discount);
     }
     void output()
     {
         printf("%s-%s %d %d ", lastName.c_str(), numberPhone.c_str(), minutePrice, discount);
         startTime.getTime();
         endTime.getTime();
-//        cout << this->sumPrice << "\n";
+        cout << this->sumPrice << "\n";
     }
+};
+
+class ListPayer{
+private:
+    int vecLength;
+    string name;
+    vector <Bill> List;
+    double totalPrice;
+public:
+    ListPayer()
+    {
+        cin >> vecLength;
+        cin >> this->name;
+        List.resize(vecLength);
+    }
+
 };
 
 void vec_output(vector <Bill> &arr, int size)
@@ -166,9 +183,9 @@ int main()
     int size1 = 1, size2 = 1;
     string name1, name2;
 
-    cin >> size1;
+//    cin >> size1;
 //    cin >> name1;
-    vector <Bill> array1(size1);
+    vector <Bill> array1(1);
 
 //    cin >> size2;
 //    cin >> name2;
