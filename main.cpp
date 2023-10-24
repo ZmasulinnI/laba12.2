@@ -184,28 +184,83 @@ public:
         }
     }
 
-    ListPayer operator +(ListPayer& value)
+    void operator +(ListPayer& value)
     {
-        ListPayer output;
-        output.List = this->List;
+        ListPayer output_sum;
+        output_sum.List = this->List;
         bool flag = false;
         for(int i = 0;i<value.vecLength;i++)
         {
             flag = false;
             for(int j = 0;j < this->vecLength;j++)
             {
-                if(output.List[j].last_name_getter() == value.List[i].last_name_getter())
+                if(value.List[i].last_name_getter() == output_sum.List[j].last_name_getter())
                 {
                     flag = true;
                     break;
                 }
-                if(!flag)
-                {
-
-                }
+            }
+            if(!flag)
+            {
+                output_sum.List.push_back(value.List[i]);
             }
         }
+        output_sum.name = "ListPayer1 + ListPayer2";
+        output_sum.vecLength = output_sum.List.size();
+        output_sum.sum_calculate();
+        output_sum.output();
     }
+    void operator -(ListPayer& value)
+    {
+        ListPayer output_sub;
+        bool flag = false;
+        for(int i  = 0; i < this->vecLength; i++)
+        {
+            flag = false;
+            for(int j = 0; j < value.vecLength; j++)
+            {
+                if(this->List[i].last_name_getter() == value.List[j].last_name_getter())
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag)
+            {
+                output_sub.List.push_back(this->List[i]);
+            }
+        }
+        output_sub.name = "ListPayer1 - ListPayer2";
+        output_sub.vecLength = output_sub.List.size();
+        output_sub.sum_calculate();
+        output_sub.output();
+    }
+    void operator *(ListPayer& value)
+    {
+        ListPayer output_mult;
+        bool flag = false;
+        for(int i  = 0; i < this->vecLength; i++)
+        {
+            flag = false;
+            for(int j = 0; j < value.vecLength; j++)
+            {
+                if(this->List[i].last_name_getter() == value.List[j].last_name_getter())
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag)
+            {
+                output_mult.List.push_back(this->List[i]);
+            }
+        }
+        output_mult.name = "ListPayer1 * ListPayer2";
+        output_mult.vecLength = output_mult.List.size();
+        output_mult.sum_calculate();
+        output_mult.output();
+    }
+
     void output()
     {
         cout << name << " summa=" << totalPrice << "\n";
@@ -224,11 +279,19 @@ int main()
     ListPayer ListPayer1;
     ListPayer ListPayer2;
 
+
     ListPayer1.init();
     ListPayer2.init();
 
-    ListPayer1.output();
-    ListPayer2.output();
+//    ListPayer1.output();
+//    ListPayer2.output();
+
+//    ListPayer1 + ListPayer2;
+
+    ListPayer1 + ListPayer2;
+    ListPayer1 - ListPayer2;
+    ListPayer1 * ListPayer2;
+
 
     return 0;
 }
