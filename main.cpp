@@ -180,7 +180,7 @@ public:
     {
         for(int i = 0; i < vecLength;i++)
         {
-            this->totalPrice += List[i].sum_getter();
+            this->totalPrice += this->List[i].sum_getter();
         }
     }
 
@@ -212,7 +212,7 @@ public:
     }
     void operator -(ListPayer& value)
     {
-        ListPayer output_sub;
+        ListPayer *output_sub = new ListPayer;
         bool flag = false;
         for(int i  = 0; i < this->vecLength; i++)
         {
@@ -227,17 +227,19 @@ public:
             }
             if(!flag)
             {
-                output_sub.List.push_back(this->List[i]);
+                output_sub->List.push_back(this->List[i]);
             }
         }
-        output_sub.name = "ListPayer1 - ListPayer2";
-        output_sub.vecLength = output_sub.List.size();
-        output_sub.sum_calculate();
-        output_sub.output();
+        output_sub->name = "ListPayer1 - ListPayer2";
+        output_sub->vecLength = output_sub->List.size();
+        output_sub->sum_calculate();
+        output_sub->output();
     }
     void operator *(ListPayer& value)
     {
         ListPayer output_mult;
+        cout << "\n" << output_mult.totalPrice << "\n";
+        cout << "\n" << output_mult.vecLength << "\n";
         bool flag = false;
         for(int i  = 0; i < this->vecLength; i++)
         {
@@ -259,11 +261,12 @@ public:
         output_mult.vecLength = output_mult.List.size();
         output_mult.sum_calculate();
         output_mult.output();
+        cout << output_mult.totalPrice;
     }
 
     void output()
     {
-        cout << name << " summa=" << totalPrice << "\n";
+        cout << this->name << " summa=" << this->totalPrice << "\n";
         vec_output();
     }
 
